@@ -70,8 +70,7 @@ New-ADUser -Name "svc-sql" -SamAccountName "svc-sql" -UserPrincipalName "svc-sql
   -AccountPassword (ConvertTo-SecureString "P@ssw0rd123!" -AsPlainText -Force)
 setspn -A MSSQLSvc/dc01.lab.local:1433 LAB\svc-sql
 ```
-
-![LabUsers OU](images/b3-ad-users-groups.png)
+<img width="1026" height="719" alt="b3-ad-users-groups" src="https://github.com/user-attachments/assets/96fd1719-85ab-4619-8d1f-8150373dcbbd" />
 
 *Ref 1: LabUsers OU with test users, IT-Admins group and svc-sql*
 
@@ -82,12 +81,11 @@ Static IP `10.10.10.20/24` with DNS pointing to DC01, then join the domain and s
 ```powershell
 Add-Computer -DomainName "lab.local" -Credential (Get-Credential) -Restart
 ```
-
-![CLIENT01 in AD](images/c-client01-joined.png)
+<img width="1026" height="714" alt="c-client01-joined" src="https://github.com/user-attachments/assets/2b5a4165-a02a-4bb0-aae8-b1b4c5a816fc" />
 
 *Ref 2: CLIENT01 in the Computers container on DC01*
 
-![Domain login](images/c-domain-login.png)
+<img width="1018" height="761" alt="c-domain-login" src="https://github.com/user-attachments/assets/953bde77-d03e-4991-aae2-ac6471e7ff5f" />
 
 *Ref 3: Domain sign-in as LAB\user1*
 
@@ -112,7 +110,7 @@ sudo /opt/splunk/bin/splunk enable boot-start -user splunk
 
 The web UI runs on `http://10.10.10.30:8000`. For the license I kept the **Enterprise Trial** (60 days) instead of switching to Free (see Notes).
 
-![Splunk home](images/e-splunk-home.png)
+<img width="1912" height="901" alt="e-splunk-home" src="https://github.com/user-attachments/assets/313ccb37-35ad-4f6b-b8b3-e41795d6771a" />
 
 *Ref 4: Splunk Enterprise after first login*
 
@@ -139,7 +137,7 @@ renderXml = true
 
 Apply with `Restart-Service SplunkForwarder` and check the connection with `splunk.exe list forward-server`. It must show **Active forwards**.
 
-![Universal Forwarder on DC01](images/f-uf-installed-dc01.png)
+<img width="1204" height="716" alt="f-uf-installed-dc01" src="https://github.com/user-attachments/assets/49a8ca8b-3f49-4936-add1-b7002e3af0f1" />
 
 *Ref 5: Universal Forwarder installed on DC01*
 
@@ -147,7 +145,7 @@ Apply with `Restart-Service SplunkForwarder` and check the connection with `splu
 
 Apps → Find More Apps → **Splunk Add-on for Microsoft Windows**. It provides the field extractions (`EventCode`, `Account_Name`, `Logon_Type`, …) used by searches and detections.
 
-![EventCode 4624](images/g-eventcode-4624.png)
+<img width="1912" height="914" alt="g-eventcode-4624" src="https://github.com/user-attachments/assets/9a8b6055-37ea-4aba-943c-54bdf4b8d5a2" />
 
 *Ref 6: Successful logons (4624) from DC01 with extracted fields*
 
@@ -172,8 +170,7 @@ Install Sysmon with the [SwiftOnSecurity config](https://github.com/SwiftOnSecur
 .\Sysmon64.exe -accepteula -i sysmonconfig-export.xml
 Get-WinEvent -LogName "Microsoft-Windows-Sysmon/Operational" -MaxEvents 5
 ```
-
-![Sysmon on DC01](images/i-sysmon-dc01.png)
+<img width="1365" height="710" alt="i-sysmon-dc01" src="https://github.com/user-attachments/assets/86302e19-9e4b-4421-99d0-f734e18b64e4" />
 
 *Ref 7: Sysmon installed on DC01 and writing events*
 
@@ -186,8 +183,7 @@ index=main host=DC01 EventCode=4624
 index=main host=CLIENT01 source="*Sysmon*" EventCode=1
 index=main host=DC01 EventCode=4720
 ```
-
-![EventCode 4720](images/j-eventcode-4720.png)
+<img width="1912" height="914" alt="j-eventcode-4720" src="https://github.com/user-attachments/assets/9b85a4c3-7c91-48bb-bed3-389cd96acf22" />
 
 *Ref 8: User creation events (4720) from DC01 in Splunk*
 
